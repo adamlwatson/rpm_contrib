@@ -13,7 +13,13 @@ DependencyDetection.defer do
   executes do
     ::Goliath::Request.class_eval do
       include NewRelic::Agent::MethodTracer
-      add_method_tracer :post_process # Traced method: class = Goliath::Request,method = post_process, metric = 'Custom/Goliath::Request/post_process'
+      add_method_tracer :process
+       add_method_tracer :post_process # Traced method: class = Goliath::Request,method = post_process, metric = 'Custom/Goliath::Request/post_process'
+    end
+
+    ::Goliath::API.class_eval do
+        include NewRelic::Agent::MethodTracer
+        add_method_tracer :call
     end
 
   end
